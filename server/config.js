@@ -1,76 +1,76 @@
 /**
- * 奖品设置
- * type: 唯一标识，0是默认特别奖的占位符，其它奖品不可使用
- * count: 奖品数量
- * title: 奖品描述
- * text: 奖品标题
- * img: 图片地址
+ * Cài đặt giải thưởng
+ * type: Mã định danh duy nhất, 0 là placeholder cho giải đặc biệt mặc định, các giải thưởng khác không thể sử dụng
+ * count: Số lượng giải thưởng
+ * title: Mô tả giải thưởng
+ * text: Tiêu đề giải thưởng
+ * img: Địa chỉ hình ảnh
  */
 const prizes = [
   {
     type: 0,
     count: 1000,
     title: "",
-    text: "特别奖"
+    text: "Giải đặc biệt"
   },
   {
     type: 1,
     count: 2,
-    text: "特等奖",
-    title: "神秘大礼",
+    text: "Giải đặc biệt",
+    title: "Quà tặng bí ẩn",
     img: "../img/secrit.jpg"
   },
   {
     type: 2,
     count: 5,
-    text: "一等奖",
+    text: "Giải nhất",
     title: "Mac Pro",
     img: "../img/mbp.jpg"
   },
   {
     type: 3,
     count: 6,
-    text: "二等奖",
-    title: "华为 Mate30",
+    text: "Giải nhì",
+    title: "Huawei Mate30",
     img: "../img/huawei.png"
   },
   {
     type: 4,
     count: 7,
-    text: "三等奖",
+    text: "Giải ba",
     title: "Ipad Mini5",
     img: "../img/ipad.jpg"
   },
   {
     type: 5,
     count: 8,
-    text: "四等奖",
-    title: "大疆无人机",
+    text: "Giải tư",
+    title: "Máy bay không người lái DJI",
     img: "../img/spark.jpg"
   },
   {
     type: 6,
     count: 8,
-    text: "五等奖",
+    text: "Giải năm",
     title: "Kindle",
     img: "../img/kindle.jpg"
   },
   {
     type: 7,
     count: 11,
-    text: "六等奖",
-    title: "漫步者蓝牙耳机",
+    text: "Giải sáu",
+    title: "Tai nghe Bluetooth Edifier",
     img: "../img/edifier.jpg"
   }
 ];
 
 /**
- * 一次抽取的奖品个数与prizes对应
+ * Số lượng giải thưởng quay một lần tương ứng với prizes
  */
 const EACH_COUNT = [1, 1, 5, 6, 7, 8, 9, 10];
 
 /**
- * 卡片公司名称标识
+ * Logo tên công ty trên thẻ
  */
 const COMPANY = "MoShang";
 

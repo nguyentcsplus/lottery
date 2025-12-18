@@ -25,7 +25,7 @@ let app = express(),
   defaultType = cfg.prizes[0]["type"],
   defaultPage = `default data`;
 
-//这里指定参数使用 json 格式
+//Ở đây chỉ định tham số sử dụng định dạng json
 app.use(
   bodyParser.json({
     limit: "1mb"
@@ -44,12 +44,12 @@ if (process.argv.length > 2) {
 
 app.use(express.static(cwd));
 
-//请求地址为空，默认重定向到index.html文件
+//Địa chỉ yêu cầu trống, mặc định chuyển hướng đến file index.html
 app.get("/", (req, res) => {
   res.redirect(301, "index.html");
 });
 
-//设置跨域访问
+//Thiết lập truy cập cross-origin
 app.all("*", function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -60,11 +60,11 @@ app.all("*", function(req, res, next) {
 });
 
 app.post("*", (req, res, next) => {
-  log(`请求内容：${JSON.stringify(req.path, 2)}`);
+  log(`Nội dung yêu cầu：${JSON.stringify(req.path, 2)}`);
   next();
 });
 
-// 获取之前设置的数据
+// Lấy dữ liệu đã thiết lập trước đó
 router.post("/getTempData", (req, res, next) => {
   getLeftUsers();
   res.json({
@@ -74,11 +74,11 @@ router.post("/getTempData", (req, res, next) => {
   });
 });
 
-// 获取所有用户
+// Lấy tất cả người dùng
 router.post("/reset", (req, res, next) => {
   luckyData = {};
   errorData = [];
-  log(`重置数据成功`);
+  log(`Đặt lại dữ liệu thành công`);
   saveErrorDataFile(errorData);
   return saveDataFile(luckyData).then(data => {
     res.json({
@@ -87,83 +87,83 @@ router.post("/reset", (req, res, next) => {
   });
 });
 
-// 获取所有用户
+// Lấy tất cả người dùng
 router.post("/getUsers", (req, res, next) => {
   res.json(curData.users);
-  log(`成功返回抽奖用户数据`);
+  log(`Trả về dữ liệu người quay số thành công`);
 });
 
-// 获取奖品信息
+// Lấy thông tin giải thưởng
 router.post("/getPrizes", (req, res, next) => {
   // res.json(curData.prize);
-  log(`成功返回奖品数据`);
+  log(`Trả về dữ liệu giải thưởng thành công`);
 });
 
-// 保存抽奖数据
+// Lưu dữ liệu quay số
 router.post("/saveData", (req, res, next) => {
   let data = req.body;
   setLucky(data.type, data.data)
     .then(t => {
       res.json({
-        type: "设置成功！"
+        type: "Thiết lập thành công！"
       });
-      log(`保存奖品数据成功`);
+      log(`Lưu dữ liệu giải thưởng thành công`);
     })
     .catch(data => {
       res.json({
-        type: "设置失败！"
+        type: "Thiết lập thất bại！"
       });
-      log(`保存奖品数据失败`);
+      log(`Lưu dữ liệu giải thưởng thất bại`);
     });
 });
 
-// 保存抽奖数据
+// Lưu dữ liệu quay số
 router.post("/errorData", (req, res, next) => {
   let data = req.body;
   setErrorData(data.data)
     .then(t => {
       res.json({
-        type: "设置成功！"
+        type: "Thiết lập thành công！"
       });
-      log(`保存没来人员数据成功`);
+      log(`Lưu dữ liệu người không đến thành công`);
     })
     .catch(data => {
       res.json({
-        type: "设置失败！"
+        type: "Thiết lập thất bại！"
       });
-      log(`保存没来人员数据失败`);
+      log(`Lưu dữ liệu người không đến thất bại`);
     });
 });
 
-// 保存数据到excel中去
+// Lưu dữ liệu vào excel
 router.post("/export", (req, res, next) => {
   let type = [1, 2, 3, 4, 5, defaultType],
-    outData = [["工号", "姓名", "部门"]];
+    outData = [["Mã nhân viên", "Họ tên", "Phòng ban"]];
   cfg.prizes.forEach(item => {
     outData.push([item.text]);
     outData = outData.concat(luckyData[item.type] || []);
   });
 
-  writeXML(outData, "/抽奖结果.xlsx")
+  writeXML(outData, "/Kết quả quay số.xlsx")
     .then(dt => {
-      // res.download('/抽奖结果.xlsx');
+      // res.download('/Kết quả quay số.xlsx');
       res.status(200).json({
         type: "success",
-        url: "抽奖结果.xlsx"
+        url: "Kết quả quay số.xlsx"
       });
-      log(`导出数据成功！`);
+      log(`Xuất dữ liệu thành công！`);
     })
     .catch(err => {
       res.json({
         type: "error",
         error: err.error
       });
-      log(`导出数据失败！`);
+      log(`Xuất dữ liệu thất bại！`);
     });
 });
 
-//对于匹配不到的路径或者请求，返回默认页面
-//区分不同的请求返回不同的页面内容
+//Đối với đường dẫn hoặc yêu cầu không khớp, trả về trang mặc định
+//Phân biệt các yêu cầu khác nhau trả về nội dung trang khác nhau
 router.all("*", (req, res) => {
   if (req.method.toLowerCase() === "get") {
     if (/\.(html|htm)/.test(req.originalUrl)) {
@@ -204,15 +204,15 @@ function setErrorData(data) {
 app.use(router);
 
 function loadData() {
-  console.log("加载EXCEL数据文件");
+  console.log("Tải file dữ liệu EXCEL");
   let cfgData = {};
 
   // curData.users = loadXML(path.join(cwd, "data/users.xlsx"));
   curData.users = loadXML(path.join(dataBath, "data/users.xlsx"));
-  // 重新洗牌
+  // Xáo trộn lại
   shuffle(curData.users);
 
-  // 读取已经抽取的结果
+  // Đọc kết quả đã quay
   loadTempData()
     .then(data => {
       luckyData = data[0];
@@ -224,7 +224,7 @@ function loadData() {
 }
 
 function getLeftUsers() {
-  //  记录当前已抽取的用户
+  //  Ghi lại người dùng đã quay hiện tại
   let lotteredUser = {};
   for (let key in luckyData) {
     let luckys = luckyData[key];
@@ -232,7 +232,7 @@ function getLeftUsers() {
       lotteredUser[item[0]] = true;
     });
   }
-  // 记录当前已抽取但是不在线人员
+  // Ghi lại người đã quay nhưng không có mặt
   errorData.forEach(item => {
     lotteredUser[item[0]] = true;
   });

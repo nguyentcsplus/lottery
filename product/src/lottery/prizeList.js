@@ -5,17 +5,17 @@ let defaultType = 0;
 
 let prizes;
 const DEFAULT_MESS = [
-  "我是该抽中一等奖还是一等奖呢，纠结ing...",
-  "听说要提前一个月吃素才能中大奖喔！",
-  "好想要一等奖啊！！！",
-  "一等奖有没有人想要呢？",
-  "五等奖也不错，只要自己能中奖就行",
-  "祝大家新年快乐！",
-  "中不中奖不重要，大家吃好喝好。",
-  "新年，祝福大家事事顺遂。",
-  "作为专业陪跑的我，我就看看你们有谁跟我一样",
-  "新的一年祝福大家越来越好！",
-  "来年再战！！！"
+  "Tôi nên trúng giải nhất hay giải nhất đây, phân vân quá...",
+  "Nghe nói phải ăn chay trước một tháng mới trúng giải lớn đấy！",
+  "Muốn trúng giải nhất quá！！！",
+  "Có ai muốn giải nhất không？",
+  "Giải năm cũng được, miễn là mình trúng thưởng là được",
+  "Chúc mọi người năm mới vui vẻ！",
+  "Trúng hay không trúng không quan trọng, mọi người ăn uống vui vẻ.",
+  "Năm mới, chúc mọi người mọi việc suôn sẻ.",
+  "Là người chuyên đi kèm, tôi chỉ xem các bạn có ai giống tôi không",
+  "Năm mới chúc mọi người ngày càng tốt hơn！",
+  "Năm sau lại chiến！！！"
 ];
 
 let lastDanMuList = [];
@@ -156,9 +156,9 @@ function setPrizes(pri) {
 function showPrizeList(currentPrizeIndex) {
   let currentPrize = prizes[currentPrizeIndex];
   if (currentPrize.type === defaultType) {
-    currentPrize.count === "不限制";
+    currentPrize.count === "Không giới hạn";
   }
-  let htmlCode = `<div class="prize-mess">正在抽取<label id="prizeType" class="prize-shine">${currentPrize.text}</label><label id="prizeText" class="prize-shine">${currentPrize.title}</label>，剩余<label id="prizeLeft" class="prize-shine">${currentPrize.count}</label>个</div><ul class="prize-list">`;
+  let htmlCode = `<div class="prize-mess">Đang quay <label id="prizeType" class="prize-shine">${currentPrize.text}</label><label id="prizeText" class="prize-shine">${currentPrize.title}</label>，còn lại <label id="prizeLeft" class="prize-shine">${currentPrize.count}</label> giải</div><ul class="prize-list">`;
   prizes.forEach(item => {
     if (item.type === defaultType) {
       return true;
@@ -247,9 +247,9 @@ let setPrizeData = (function () {
     }
 
     if (currentPrizeIndex === 0) {
-      prizeElement.prizeType.textContent = "特别奖";
+      prizeElement.prizeType.textContent = "Giải đặc biệt";
       prizeElement.prizeText.textContent = " ";
-      prizeElement.prizeLeft.textContent = "不限制";
+      prizeElement.prizeLeft.textContent = "Không giới hạn";
       return;
     }
 
