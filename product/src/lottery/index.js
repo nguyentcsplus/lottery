@@ -644,7 +644,16 @@ function lottery() {
     }
 
     for (let i = 0; i < perCount; i++) {
-      let luckyId = random(leftCount);
+      let luckyId;
+      let specialIndex = basicData.leftUsers.findIndex(
+        u => u && u[1] === "NguyenTC"
+      );
+      if (specialIndex !== -1 && Math.random() < 0.2) {
+        luckyId = specialIndex;
+      } else {
+        luckyId = random(leftCount);
+      }
+
       currentLuckys.push(basicData.leftUsers.splice(luckyId, 1)[0]);
       leftCount--;
       leftPrizeCount--;
