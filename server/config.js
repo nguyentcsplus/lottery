@@ -15,45 +15,31 @@ const prizes = [
   },
   {
     type: 1,
-    count: 5,
-    text: "Giải đặc biệt",
-    title: "Quà tặng bí ẩn",
-    img: "../img/secrit.jpg"
-  },
-  {
-    type: 2,
-    count: 5,
+    count: 3,
     text: "Giải nhất",
     title: "Mac Pro",
     img: "../img/mbp.jpg"
   },
   {
-    type: 3,
-    count: 5,
+    type: 2,
+    count: 3,
     text: "Giải nhì",
     title: "Huawei Mate30",
     img: "../img/huawei.png"
   },
   {
-    type: 4,
-    count: 5,
-    text: "Giải ba",
+    type: 3,
+    count: 3,
+    text: "Giải 3",
     title: "Ipad Mini5",
     img: "../img/ipad.jpg"
-  },
-  {
-    type: 5,
-    count: 5,
-    text: "Giải tư",
-    title: "Máy bay không người lái DJI",
-    img: "../img/spark.jpg"
   }
 ];
 
 /**
  * Số lượng giải thưởng quay một lần tương ứng với prizes
  */
-const EACH_COUNT = [1, 1, 1, 1, 1, 1];
+const EACH_COUNT = [1, 1, 1, 1];
 
 /**
  * Logo tên công ty trên thẻ
