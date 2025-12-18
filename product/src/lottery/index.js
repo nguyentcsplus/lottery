@@ -229,7 +229,7 @@ function bindEvent() {
       // Vào chương trình quay số
       case "enter":
         removeHighlight();
-        addQipao(`Sắp quay [${currentPrize.title}], đừng rời đi.`);
+        addQipao(`Sắp quay [${currentPrize.text}], đừng rời đi.`);
         // rotate = !rotate;
         rotate = true;
         switchScreen("lottery");
@@ -258,6 +258,11 @@ function bindEvent() {
         break;
       // Quay số
       case "lottery":
+        // Nếu đã hết giải thưởng thì không cho quay nữa
+        if (!currentPrize || currentPrize.type === 0) {
+          addQipao("Đã hết giải thưởng, không thể quay thêm nữa~~");
+          return;
+        }
         setLotteryStatus(true);
         // Mỗi lần quay số trước tiên lưu dữ liệu quay số lần trước
         saveData();
@@ -267,16 +272,21 @@ function bindEvent() {
           // Quay số
           lottery();
         });
-        addQipao(`Đang quay [${currentPrize.title}], chuẩn bị sẵn sàng`);
+        addQipao(`Đang quay [${currentPrize.text}], chuẩn bị sẵn sàng`);
         break;
       // Quay lại
       case "reLottery":
+        // Nếu đã hết giải thưởng thì không cho quay lại
+        if (!currentPrize || currentPrize.type === 0) {
+          addQipao("Đã hết giải thưởng, không thể quay lại được~~");
+          return;
+        }
         if (currentLuckys.length === 0) {
           addQipao(`Hiện tại chưa quay số, không thể quay lại được~~`);
           return;
         }
         setErrorData(currentLuckys);
-        addQipao(`Quay lại [${currentPrize.title}], chuẩn bị sẵn sàng`);
+        addQipao(`Quay lại [${currentPrize.text}], chuẩn bị sẵn sàng`);
         setLotteryStatus(true);
         // Quay lại thì trực tiếp quay, không lưu dữ liệu quay số lần trước
         // Quay số
@@ -511,7 +521,7 @@ function selectCard(duration = 600) {
 
   let text = currentLuckys.map(item => item[1]);
   addQipao(
-    `Chúc mừng ${text.join("、")} đã trúng ${currentPrize.title}, năm mới chắc chắn thịnh vượng.`
+    `Chúc mừng ${text.join("、")} đã trúng ${currentPrize.text}, năm mới chắc chắn thịnh vượng.`
   );
 
   selectedCardIndex.forEach((cardIndex, index) => {
@@ -660,7 +670,7 @@ function lottery() {
  */
 function saveData() {
   if (!currentPrize) {
-    //Nếu giải thưởng đã quay hết, thì không ghi lại dữ liệu nữa, nhưng vẫn có thể quay số
+    //Nếu giải thưởng đã quay hết, thì không ghi lại dữ liệu nữa, và không quay tiếp
     return;
   }
 
@@ -673,10 +683,13 @@ function saveData() {
 
   if (currentPrize.count <= curLucky.length) {
     currentPrizeIndex--;
-    if (currentPrizeIndex <= -1) {
-      currentPrizeIndex = 0;
+    // Nếu đã quay hết tất cả các giải thực (type > 0) thì đánh dấu là không còn giải
+    if (currentPrizeIndex <= 0) {
+      currentPrizeIndex = -1;
+      currentPrize = null;
+    } else {
+      currentPrize = basicData.prizes[currentPrizeIndex];
     }
-    currentPrize = basicData.prizes[currentPrizeIndex];
   }
 
   if (currentLuckys.length > 0) {
