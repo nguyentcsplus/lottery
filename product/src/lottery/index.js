@@ -274,27 +274,6 @@ function bindEvent() {
         });
         addQipao(`Đang quay [${currentPrize.text}], chuẩn bị sẵn sàng`);
         break;
-      // Quay lại
-      case "reLottery":
-        // Nếu đã hết giải thưởng thì không cho quay lại
-        if (!currentPrize || currentPrize.type === 0) {
-          addQipao("Đã hết giải thưởng, không thể quay lại được~~");
-          return;
-        }
-        if (currentLuckys.length === 0) {
-          addQipao(`Hiện tại chưa quay số, không thể quay lại được~~`);
-          return;
-        }
-        setErrorData(currentLuckys);
-        addQipao(`Quay lại [${currentPrize.text}], chuẩn bị sẵn sàng`);
-        setLotteryStatus(true);
-        // Quay lại thì trực tiếp quay, không lưu dữ liệu quay số lần trước
-        // Quay số
-        resetCard().then(res => {
-          // Quay số
-          lottery();
-        });
-        break;
       // Xuất kết quả quay số
       case "save":
         saveData().then(res => {
@@ -318,11 +297,25 @@ function switchScreen(type) {
       btns.enter.classList.remove("none");
       btns.lotteryBar.classList.add("none");
       transform(targets.table, 2000);
+      // Ở màn hình chính không hiển thị dòng "Đang quay..."
+      {
+        const prizeMess = document.querySelector(".prize-mess");
+        if (prizeMess) {
+          prizeMess.style.display = "none";
+        }
+      }
       break;
     default:
       btns.enter.classList.add("none");
       btns.lotteryBar.classList.remove("none");
       transform(targets.sphere, 2000);
+      // Vào màn hình quay số thì hiện lại dòng "Đang quay..."
+      {
+        const prizeMess = document.querySelector(".prize-mess");
+        if (prizeMess) {
+          prizeMess.style.display = "";
+        }
+      }
       break;
   }
 }
