@@ -20,6 +20,9 @@ let TOTAL_CARDS,
     lotteryBar: document.querySelector("#lotteryBar"),
     lottery: document.querySelector("#lottery")
   },
+  // Timer tự dừng và ẩn nút kết thúc
+  autoStopTimer,
+  hideStopButtonTimer,
   prizes,
   EACH_COUNT,
   ROW_COUNT = 7,
@@ -208,11 +211,15 @@ function setLotteryStatus(status = false) {
 function bindEvent() {
   document.querySelector("#menu").addEventListener("click", function (e) {
     e.stopPropagation();
-    // Nếu đang quay số, cấm mọi thao tác
-    if (isLotting) {
+    // Nếu đang quay số, cấm mọi thao tác (trừ Đặt lại)
+    if (isLotting && e.target.id !== "reset") {
       if (e.target.id === "lottery") {
+        // Người dùng nhấn kết thúc thủ công
         rotateObj.stop();
         btns.lottery.innerHTML = "Bắt đầu quay số";
+        // Dừng các timer auto-stop / ẩn nút
+        autoStopTimer && clearTimeout(autoStopTimer);
+        hideStopButtonTimer && clearTimeout(hideStopButtonTimer);
       } else {
         addQipao("Đang quay số, xin chậm lại một chút～～");
       }
@@ -272,6 +279,19 @@ function bindEvent() {
           // Quay số
           lottery();
         });
+        // Thiết lập hẹn giờ: 15s ẩn nút kết thúc, 20s tự dừng và công bố kết quả
+        hideStopButtonTimer && clearTimeout(hideStopButtonTimer);
+        autoStopTimer && clearTimeout(autoStopTimer);
+        hideStopButtonTimer = setTimeout(() => {
+          if (isLotting && btns.lottery) {
+            btns.lottery.classList.add("none");
+          }
+        }, 15000);
+        autoStopTimer = setTimeout(() => {
+          if (isLotting && rotateObj) {
+            rotateObj.stop();
+          }
+        }, 20000);
         addQipao(`Đang quay [${currentPrize.text}], chuẩn bị sẵn sàng`);
         break;
       // Xuất kết quả quay số
@@ -552,9 +572,17 @@ function selectCard(duration = 600) {
     .to({}, duration * 2)
     .onUpdate(render)
     .start()
-      .onComplete(() => {
+    .onComplete(() => {
       // Sau khi hoàn thành animation có thể thao tác
       setLotteryStatus();
+      // Hiện lại nút quay và đổi về trạng thái ban đầu
+      if (btns && btns.lottery) {
+        btns.lottery.classList.remove("none");
+        btns.lottery.innerHTML = "Bắt đầu quay số";
+      }
+      // Dọn dẹp timer nếu còn
+      autoStopTimer && clearTimeout(autoStopTimer);
+      hideStopButtonTimer && clearTimeout(hideStopButtonTimer);
     });
 }
 
