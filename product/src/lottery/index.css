@@ -495,16 +495,15 @@ button:active {
 
 .company-header {
   position: fixed;
-  top: 3vh;
-  right: 12vh;
+  top: 2vh;
+  right: 2vh;
   z-index: 5;
-  color: rgba(100, 200, 255, 0.9);
-  font-size: 3.5vh;
-  font-weight: bold;
-  text-shadow: 0 0 12px rgba(0, 150, 255, 0.7);
-  font-family: Helvetica, sans-serif;
-  white-space: nowrap;
-  letter-spacing: 0.1em;
+}
+
+.company-logo {
+  height: 6vh;
+  width: auto;
+  border-radius: 0.5vh;
 }
 
 .music {
