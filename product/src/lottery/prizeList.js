@@ -158,7 +158,8 @@ function showPrizeList(currentPrizeIndex) {
   if (currentPrize.type === defaultType) {
     currentPrize.count === "Không giới hạn";
   }
-  let htmlCode = `<div class="prize-mess">Đang quay <label id="prizeType" class="prize-shine">${currentPrize.text}</label><label id="prizeText" class="prize-shine">${currentPrize.title}</label>，còn lại <label id="prizeLeft" class="prize-shine">${currentPrize.count}</label> giải</div><ul class="prize-list">`;
+  // Bỏ hoàn toàn dòng trạng thái "Đang quay ... còn lại ...", chỉ giữ danh sách giải
+  let htmlCode = `<ul class="prize-list">`;
   prizes.forEach(item => {
     if (item.type === defaultType) {
       return true;
@@ -218,9 +219,10 @@ let setPrizeData = (function () {
     }
 
     if (!prizeElement.prizeType) {
-      prizeElement.prizeType = document.querySelector("#prizeType");
-      prizeElement.prizeLeft = document.querySelector("#prizeLeft");
-      prizeElement.prizeText = document.querySelector("#prizeText");
+      // Có thể không còn phần hiển thị trạng thái, nên lấy một cách an toàn
+      prizeElement.prizeType = document.querySelector("#prizeType") || null;
+      prizeElement.prizeLeft = document.querySelector("#prizeLeft") || null;
+      prizeElement.prizeText = document.querySelector("#prizeText") || null;
     }
 
     if (isInit) {
@@ -240,16 +242,26 @@ let setPrizeData = (function () {
       lastBox.classList.remove("shine");
       lastBox.classList.add("done");
       elements.box && elements.box.classList.add("shine");
-      prizeElement.prizeType.textContent = currentPrize.text;
-      prizeElement.prizeText.textContent = currentPrize.title;
+      if (prizeElement.prizeType) {
+        prizeElement.prizeType.textContent = currentPrize.text;
+      }
+      if (prizeElement.prizeText) {
+        prizeElement.prizeText.textContent = currentPrize.title;
+      }
 
       lasetPrizeIndex = currentPrizeIndex;
     }
 
     if (currentPrizeIndex === 0) {
-      prizeElement.prizeType.textContent = "Giải đặc biệt";
-      prizeElement.prizeText.textContent = " ";
-      prizeElement.prizeLeft.textContent = "Không giới hạn";
+      if (prizeElement.prizeType) {
+        prizeElement.prizeType.textContent = "Giải đặc biệt";
+      }
+      if (prizeElement.prizeText) {
+        prizeElement.prizeText.textContent = " ";
+      }
+      if (prizeElement.prizeLeft) {
+        prizeElement.prizeLeft.textContent = "Không giới hạn";
+      }
       return;
     }
 
@@ -258,7 +270,9 @@ let setPrizeData = (function () {
     let percent = (count / totalCount).toFixed(2);
     elements.bar && (elements.bar.style.width = percent * 100 + "%");
     elements.text && (elements.text.textContent = count + "/" + totalCount);
-    prizeElement.prizeLeft.textContent = count;
+    if (prizeElement.prizeLeft) {
+      prizeElement.prizeLeft.textContent = count;
+    }
   };
 })();
 
