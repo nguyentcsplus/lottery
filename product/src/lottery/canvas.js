@@ -76,10 +76,10 @@
       initializeStars();
     }
     if (warp == 0) {
-      c.fillStyle = "rgba(0,10,20,1)";
+      c.fillStyle = "rgba(13, 27, 42, 1)";
       c.fillRect(0, 0, canvas.width, canvas.height);
     }
-    c.fillStyle = "rgba(209, 255, 255, " + radius + ")";
+    c.fillStyle = "rgba(100, 200, 255, " + radius + ")";
     for (i = 0; i < numStars; i++) {
       star = stars[i];
 
@@ -90,7 +90,7 @@
       pixelRadius = 1 * (focalLength / star.z);
 
       c.fillRect(pixelX, pixelY, pixelRadius, pixelRadius);
-      c.fillStyle = "rgba(209, 255, 255, " + star.o + ")";
+      c.fillStyle = "rgba(100, 200, 255, " + star.o + ")";
       //c.fill();
     }
   }
