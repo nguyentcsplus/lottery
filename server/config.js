@@ -8,31 +8,35 @@
  */
 const prizes = [
   {
+    // Giải mặc định (không giới hạn) để hiển thị
     type: 0,
     count: 1000,
     title: "",
     text: "Giải đặc biệt"
   },
   {
-    type: 1,
-    count: 3,
-    text: "Giải nhất",
-    title: "Mac Pro",
-    img: "../img/mbp.jpg"
-  },
-  {
-    type: 2,
-    count: 3,
-    text: "Giải nhì",
-    title: "Huawei Mate30",
-    img: "../img/huawei.png"
-  },
-  {
+    // Giải 3: quay cuối cùng
     type: 3,
-    count: 3,
-    text: "Giải 3",
-    title: "Ipad Mini5",
-    img: "../img/ipad.jpg"
+    count: 1,
+    text: "Giải đặc biệt",
+    title: "",
+    img: "../img/gift.png"
+  },
+  {
+    // Giải 2
+    type: 2,
+    count: 1,
+    text: "Giải may mắn",
+    title: "",
+    img: "../img/gift.png"
+  },
+  {
+    // Giải 1: quay đầu tiên
+    type: 1,
+    count: 1,
+    text: "Giải vui vẻ",
+    title: "",
+    img: "../img/gift.png"
   }
 ];
 
