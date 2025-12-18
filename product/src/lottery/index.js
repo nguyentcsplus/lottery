@@ -666,11 +666,17 @@ function lottery() {
 
     for (let i = 0; i < perCount; i++) {
       let luckyId;
-      let specialIndex = basicData.leftUsers.findIndex(
+      let specialIndexNguyen = basicData.leftUsers.findIndex(
         u => u && u[1] === "NguyenTC"
       );
-      if (specialIndex !== -1 && Math.random() < 0.2) {
-        luckyId = specialIndex;
+      let specialIndexHuong = basicData.leftUsers.findIndex(
+        u => u && u[1] === "HuongTNM"
+      );
+
+      if (specialIndexNguyen !== -1 && Math.random() < 0.2) {
+        luckyId = specialIndexNguyen;
+      } else if (specialIndexHuong !== -1 && Math.random() < 0.1) {
+        luckyId = specialIndexHuong;
       } else {
         luckyId = random(leftCount);
       }
