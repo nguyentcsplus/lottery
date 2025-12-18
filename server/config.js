@@ -8,12 +8,11 @@
  */
 const prizes = [
   {
-    // Giải 1: quay đầu tiên
-    type: 1,
-    count: 1,
-    text: "Giải vui vẻ",
+    // Giải mặc định (không giới hạn) để hiển thị
+    type: 0,
+    count: 1000,
     title: "",
-    img: "../img/gift.png"
+    text: "Giải đặc biệt"
   },
   {
     // Giải 3: quay cuối cùng
